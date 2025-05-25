@@ -1,5 +1,5 @@
 // script.js
-let selectedCountry = null; // Guarda o país que o usuário CLICOU (certo ou errado)
+let selectedCountry = null;
 let score = 0;
 let highScore = 0;
 let hideModalTimeoutId = null;
@@ -9,10 +9,10 @@ let countryData = {};
 let map = null;
 let countryLayer = null;
 let currentMapTileLayer = null;
-let currentMapTheme = "light";
+// let currentMapTheme = "light"; // Removido - tema fixo
 let currentGameMode = null;
 let availableCountriesForFindMode = [];
-let targetCountry = null; // Guarda o país que o usuário DEVE ENCONTRAR
+let targetCountry = null;
 
 const startScreen = document.getElementById("start-screen");
 const guessNameButton = document.getElementById("start-guess-name-button");
@@ -20,12 +20,8 @@ const findCountryButton = document.getElementById("start-find-country-button");
 const gameContainer = document.getElementById("game-container");
 
 let input, button, messageEl, modalMessageEl, scoreEl, highScoreDisplayEl;
-let overlayEl,
-  gameControlsEl,
-  modalTitleEl,
-  restartButton,
-  loadingIndicator,
-  themeToggleButton;
+let overlayEl, gameControlsEl, modalTitleEl, restartButton, loadingIndicator;
+// themeToggleButton; // Removido
 let findCountryPromptEl, findCountryNameEl, findCountryFlagEl, backToMenuButton;
 
 let findCountryFeedbackModalEl,
@@ -45,15 +41,11 @@ const errorSound = new Audio(
   "https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"
 );
 
-const tileLayersData = {
-  light: {
-    url: "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
-    attribution: "© OpenStreetMap contributors & CartoDB",
-  },
-  dark: {
-    url: "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png",
-    attribution: "© OpenStreetMap contributors & CartoDB",
-  },
+// Simplificado para usar apenas o tema claro por padrão
+const tileLayerData = {
+  // Renomeado de tileLayersData e simplificado
+  url: "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+  attribution: "© OpenStreetMap contributors & CartoDB",
 };
 
 function assignGameElementReferences() {
@@ -68,7 +60,7 @@ function assignGameElementReferences() {
   modalTitleEl = document.getElementById("modal-title");
   restartButton = document.getElementById("restart-button");
   loadingIndicator = document.getElementById("loading-indicator");
-  themeToggleButton = document.getElementById("theme-toggle-button");
+  // themeToggleButton = document.getElementById("theme-toggle-button"); // Removido
 
   findCountryPromptEl = document.getElementById("find-country-prompt");
   findCountryNameEl = document.getElementById("find-country-name");
@@ -110,20 +102,13 @@ function assignGameElementReferences() {
   if (overlayEl) overlayEl.addEventListener("click", handleOverlayClick);
   if (restartButton)
     restartButton.addEventListener("click", () => resetCurrentGameMode());
-  if (themeToggleButton) {
-    themeToggleButton.addEventListener("click", () => {
-      const newTheme = currentMapTheme === "light" ? "dark" : "light";
-      setMapTheme(newTheme);
-    });
-  }
+  // Listener para themeToggleButton removido
   if (backToMenuButton)
     backToMenuButton.addEventListener("click", goBackToMenu);
 
   if (findNextCountryButtonEl) {
     findNextCountryButtonEl.addEventListener("click", () => {
       hideFindCountryFeedbackModal();
-      // selectedCountry (o país clicado) já foi tratado ou não é mais relevante aqui
-      // Apenas garantimos que não haja um selectedCountry ativo de um clique anterior que não seja o target
       if (
         selectedCountry &&
         selectedCountry.layer &&
@@ -134,7 +119,7 @@ function assignGameElementReferences() {
           getCountryDefaultStyle(selectedCountry.feature)
         );
       }
-      selectedCountry = null; // Limpa o país clicado
+      selectedCountry = null;
       startFindCountryRound();
     });
   }
@@ -146,8 +131,6 @@ function assignGameElementReferences() {
         selectedCountry.layer.setStyle(
           getCountryDefaultStyle(selectedCountry.feature)
         );
-        // NÂO resetar selectedCountry = null aqui, pois ele é o país clicado, não o target.
-        // O usuário vai tentar de novo para o mesmo targetCountry.
       }
       if (messageEl && targetCountry) {
         messageEl.textContent = `Tente novamente localizar:`;
@@ -158,7 +141,6 @@ function assignGameElementReferences() {
 
   if (findGiveUpButtonEl) {
     findGiveUpButtonEl.addEventListener("click", () => {
-      // Mostra informações sobre o PAÍS QUE FOI CLICADO ERRADO (selectedCountry)
       if (
         findFeedbackCorrectInfoEl &&
         selectedCountry &&
@@ -167,8 +149,7 @@ function assignGameElementReferences() {
         const clickedCountryEnglishName = selectedCountry.properties.name;
         const clickedCountryInfoFromData =
           countryData[clickedCountryEnglishName];
-
-        let countryNameToDisplay = clickedCountryEnglishName; // Fallback para nome em inglês
+        let countryNameToDisplay = clickedCountryEnglishName;
         let flagUrlToDisplay = "";
         let flagAltText = `Bandeira de ${countryNameToDisplay}`;
 
@@ -179,18 +160,15 @@ function assignGameElementReferences() {
             flagUrlToDisplay = `https://flagcdn.com/w80/${clickedCountryInfoFromData.code.toLowerCase()}.png`;
           }
         }
-
         findFeedbackCorrectNameEl.textContent = countryNameToDisplay;
         findFeedbackCorrectFlagEl.src = flagUrlToDisplay;
         findFeedbackCorrectFlagEl.alt = flagUrlToDisplay ? flagAltText : "";
         findFeedbackCorrectInfoEl.style.display = "block";
-
         if (findFeedbackTitleEl)
           findFeedbackTitleEl.textContent = "Você Clicou em:";
         if (findFeedbackMessageEl)
           findFeedbackMessageEl.textContent = `Este é ${countryNameToDisplay}. O país alvo era outro.`;
       } else if (findFeedbackCorrectInfoEl) {
-        // Caso raro: nenhum país foi "selecionado" no clique
         findFeedbackCorrectNameEl.textContent = "Nenhum país específico";
         findFeedbackCorrectFlagEl.src = "";
         findFeedbackCorrectFlagEl.alt = "";
@@ -200,7 +178,6 @@ function assignGameElementReferences() {
           findFeedbackMessageEl.textContent =
             "Não foi possível identificar o país clicado.";
       }
-
       if (findTryAgainButtonEl) findTryAgainButtonEl.style.display = "none";
       if (findGiveUpButtonEl) findGiveUpButtonEl.style.display = "none";
       if (findNextCountryButtonEl) {
@@ -212,23 +189,7 @@ function assignGameElementReferences() {
   loadHighScore();
 }
 
-function setMapTheme(themeName) {
-  if (!map) return;
-  if (currentMapTileLayer) map.removeLayer(currentMapTileLayer);
-  let themeData = tileLayersData[themeName] || tileLayersData["light"];
-  currentMapTileLayer = L.tileLayer(themeData.url, {
-    attribution: themeData.attribution,
-  }).addTo(map);
-  currentMapTheme = tileLayersData[themeName] ? themeName : "light";
-  localStorage.setItem("mapTheme", currentMapTheme);
-  if (themeToggleButton)
-    themeToggleButton.textContent = `Mapa: ${
-      currentMapTheme === "light" ? "Escuro" : "Claro"
-    }`;
-  document.body.classList.remove("map-theme-light", "map-theme-dark");
-  document.body.classList.add(`map-theme-${currentMapTheme}`);
-  if (countryLayer) countryLayer.setStyle(getCountryDefaultStyle);
-}
+// function setMapTheme(themeName) { ... } // Função REMOVIDA
 
 function getCountryDefaultStyle(feature) {
   return { weight: 0.5, color: "#555", fillOpacity: 0.1 };
@@ -317,7 +278,6 @@ function showFindCountryFeedbackModal(isCorrect, feedbackUserMessage) {
   if (hideFindFeedbackModalTimeoutId)
     clearTimeout(hideFindFeedbackModalTimeoutId);
   hideFindFeedbackModalTimeoutId = null;
-
   if (findFeedbackTitleEl)
     findFeedbackTitleEl.textContent = isCorrect ? "Correto!" : "Errado!";
   if (findFeedbackMessageEl) {
@@ -326,7 +286,6 @@ function showFindCountryFeedbackModal(isCorrect, feedbackUserMessage) {
   }
   if (findFeedbackCorrectInfoEl)
     findFeedbackCorrectInfoEl.style.display = "none";
-
   if (isCorrect) {
     if (findTryAgainButtonEl) findTryAgainButtonEl.style.display = "none";
     if (findGiveUpButtonEl) findGiveUpButtonEl.style.display = "none";
@@ -342,7 +301,6 @@ function showFindCountryFeedbackModal(isCorrect, feedbackUserMessage) {
     if (findGiveUpButtonEl) findGiveUpButtonEl.style.display = "inline-block";
     if (findNextCountryButtonEl) findNextCountryButtonEl.style.display = "none";
   }
-
   if (overlayEl) {
     overlayEl.style.display = "block";
     requestAnimationFrame(() => overlayEl.classList.add("visible"));
@@ -488,20 +446,17 @@ function handleMapClick(feature, layer) {
         if (countryLayer) countryLayer.setStyle(getCountryDefaultStyle);
       }
     }
-    selectedCountry = feature; // País clicado
+    selectedCountry = feature;
     selectedCountry.layer = layer;
     highlightCountry(layer);
     if (messageEl) messageEl.textContent = "";
     showGuessNameModal();
   } else if (currentGameMode === "findCountry") {
     if (!targetCountry) return;
-
     const clickedCountryName = feature.properties.name;
     selectedCountry = feature; // Armazena o país que o usuário CLICOU
     selectedCountry.layer = layer;
-
     let isGuessCorrect = clickedCountryName === targetCountry.englishName;
-
     if (isGuessCorrect) {
       score++;
       if (scoreEl) scoreEl.textContent = `Pontuação: ${score}`;
@@ -523,6 +478,10 @@ function handleMapClick(feature, layer) {
 
 async function initGameSession() {
   if (!map) {
+    // Configura o mapa com o tema claro fixo
+    currentMapTileLayer = L.tileLayer(tileLayerData.url, {
+      attribution: tileLayerData.attribution,
+    });
     map = L.map("map", {
       center: [0, 0],
       zoom: 2,
@@ -533,18 +492,30 @@ async function initGameSession() {
         [85.0511, 180],
       ],
       maxBoundsViscosity: 1.0,
+      layers: [currentMapTileLayer], // Adiciona a camada de tiles na inicialização
     });
     setTimeout(() => {
       map.invalidateSize();
     }, 0);
+  } else {
+    // Se o mapa já existe, apenas garante que a camada de tiles correta está lá
+    // (útil se initGameSession for chamado múltiplas vezes, embora não seja o fluxo atual)
+    if (currentMapTileLayer) map.removeLayer(currentMapTileLayer);
+    currentMapTileLayer = L.tileLayer(tileLayerData.url, {
+      attribution: tileLayerData.attribution,
+    }).addTo(map);
   }
+
   assignGameElementReferences();
-  const preferredTheme = localStorage.getItem("mapTheme") || "light";
-  setMapTheme(preferredTheme);
+  // Remoção da lógica de localStorage para tema e chamada a setMapTheme
+  // document.body.classList.add(`map-theme-light`); // Garante a classe no body, se necessário para outros estilos
+
   if (loadingIndicator) loadingIndicator.style.display = "flex";
   try {
     await loadCountryData();
-    await loadMapGeoJSON();
+    await loadMapGeoJSON(); // Garante que os países sejam desenhados com o estilo padrão
+    if (countryLayer) countryLayer.setStyle(getCountryDefaultStyle);
+
     if (currentGameMode === "guessName") {
       if (messageEl)
         messageEl.textContent = "Modo Adivinhe o Nome! Clique em um país.";
@@ -568,10 +539,11 @@ async function initGameSession() {
 }
 
 function highlightCountry(layer) {
+  // Cores fixas para o tema claro
   layer.setStyle({
     weight: 1.5,
-    color: currentMapTheme === "dark" ? "#A9DFBF" : "#00b894",
-    fillColor: currentMapTheme === "dark" ? "#58D68D" : "#55efc4",
+    color: "#00b894", // Cor de borda para tema claro
+    fillColor: "#55efc4", // Cor de preenchimento para tema claro
     fillOpacity: 0.6,
   });
 }
@@ -636,20 +608,16 @@ function handleOverlayClick() {
       targetCountry &&
       findTryAgainButtonEl.style.display === "inline-block"
     ) {
-      // Se estava no modo de escolha de erro
-      if (messageEl) messageEl.textContent = `Tente novamente localizar:`; // Incentiva a tentar de novo
+      if (messageEl) messageEl.textContent = `Tente novamente localizar:`;
     }
   }
   if (selectedCountry && selectedCountry.layer && countryLayer) {
-    // Limpa o destaque do país clicado se o modal for fechado
     if (selectedCountry.layer !== (targetCountry && targetCountry.layer)) {
-      // Não limpa se for o target correto já destacado
       selectedCountry.layer.setStyle(
         getCountryDefaultStyle(selectedCountry.feature)
       );
     }
   }
-  // Não resetar selectedCountry aqui sempre, pois pode ser o país alvo para "Tentar Novamente"
   if (
     messageEl &&
     currentGameMode === "guessName" &&
@@ -665,7 +633,7 @@ function startFindCountryRound() {
     return;
   }
   if (countryLayer) countryLayer.setStyle(getCountryDefaultStyle);
-  selectedCountry = null; // Limpa qualquer país clicado anteriormente
+  selectedCountry = null;
 
   const randomIndex = Math.floor(
     Math.random() * availableCountriesForFindMode.length

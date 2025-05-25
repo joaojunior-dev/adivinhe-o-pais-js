@@ -23,7 +23,6 @@ body {
   align-items: center;
   text-align: center;
   z-index: 3000;
-  /* padding: 20px; -- Removido para centralização rigorosa */
   overflow: hidden;
 }
 
@@ -139,32 +138,17 @@ body {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  /* Ajuste para ocupar espaço se o botão de tema for removido */
+  flex-grow: 1;
 }
 
 .top-bar-left h1 {
   color: #2c3e50;
-  margin: 0 20px 0 0;
+  margin: 0; /* Margem à direita removida pois não há mais botão ao lado direto imediato */
   font-size: 1.8em;
 }
 
-#theme-toggle-button {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding: 8px 15px;
-  background-color: #7f8c8d;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9em;
-  margin: 0;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-}
-#theme-toggle-button:hover {
-  background-color: #95a5a6;
-}
-#theme-toggle-button:active {
-  transform: scale(0.98);
-}
+/* Estilos para #theme-toggle-button REMOVIDOS */
 
 .top-bar-center {
   display: flex;
@@ -295,7 +279,6 @@ body {
 }
 
 #find-country-feedback-modal h3 {
-  /* Título H3 dentro do modal de feedback */
   margin-top: 0;
   margin-bottom: 15px;
   font-size: 1.6em;
@@ -303,7 +286,6 @@ body {
 }
 
 #find-country-feedback-modal p {
-  /* Parágrafo de mensagem dentro do modal de feedback */
   font-size: 1.1em;
   margin-bottom: 10px;
 }
@@ -315,6 +297,7 @@ body {
 #find-feedback-correct-info p {
   font-size: 1em;
   margin-bottom: 8px;
+  font-weight: bold;
 }
 
 #find-feedback-correct-flag {
@@ -336,7 +319,6 @@ body {
 #find-try-again-button,
 #find-give-up-button,
 #find-next-country-button {
-  /* Estilo comum para botões do modal de feedback */
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 12px 20px;
   color: white;
@@ -362,15 +344,13 @@ body {
 }
 
 #find-next-country-button {
-  /* Estilo original, pode ser agrupado se for idêntico */
-  background-color: #5dade2; /* Mantendo consistência com o try-again */
+  background-color: #27ae60;
 }
 #find-next-country-button:hover {
-  background-color: #3498db;
+  background-color: #229954;
 }
 
 #modal-title {
-  /* Título do modal de adivinhar nome */
   margin-top: 0;
   margin-bottom: 25px;
   color: #ecf0f1;
@@ -423,7 +403,6 @@ body {
 }
 
 #modal-message {
-  /* Mensagem dentro do modal de adivinhar nome */
   margin-top: 20px;
   min-height: 24px;
   font-weight: 500;
@@ -478,10 +457,9 @@ body {
   color: #ecf0f1;
 }
 
-body.map-theme-dark #map {
-}
-body.map-theme-light #map {
-}
+/* Classes de tema no body removidas pois não há mais troca de tema */
+/* body.map-theme-dark #map { } */
+/* body.map-theme-light #map { } */
 
 /* --- AJUSTES DE RESPONSIVIDADE --- */
 @media (max-width: 992px) {
@@ -498,13 +476,12 @@ body.map-theme-light #map {
     margin-bottom: 8px;
   }
   .top-bar-left h1 {
-    margin-bottom: 10px;
+    margin-bottom: 10px; /* Adicionado para quando não há botão de tema */
     text-align: center;
     width: 100%;
   }
-  .top-bar-left {
-    flex-direction: column;
-  }
+  /* .top-bar-left { flex-direction: column; } -- Já não faz sentido sem o botão de tema */
+
   .top-bar-center {
     margin: 10px 0;
   }
@@ -551,8 +528,8 @@ body.map-theme-light #map {
   }
 
   #restart-button,
-  #back-to-menu-button,
-  #theme-toggle-button {
+  #back-to-menu-button {
+    /* Botão de tema removido desta regra */
     padding: 10px 15px;
     font-size: 0.9em;
   }
@@ -590,15 +567,13 @@ body.map-theme-light #map {
   #guess-button {
     padding: 12px 20px;
     font-size: 1em;
-  } /* Ajustado o botão de adivinhar nome */
+  }
 
   .modal-button-group button {
-    /* Botões no modal de feedback */
     font-size: 0.9em;
     padding: 10px 15px;
   }
   #find-country-feedback-modal p {
-    /* Mensagem no modal de feedback */
     font-size: 1em;
   }
 }
@@ -633,10 +608,10 @@ body.map-theme-light #map {
     margin: 5px;
     min-height: 40px;
   }
-  #theme-toggle-button {
+  /* #theme-toggle-button { -- Removido
     width: auto;
     max-width: calc(100% - 10px);
-  }
+  } */
 
   #map {
     height: 300px;
