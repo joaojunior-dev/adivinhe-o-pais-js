@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adivinhe o País</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <h1>Adivinhe o País</h1>
+  <div id="map"></div>
+
+  <div id="overlay"></div>
+
+  <div id="game-controls">
+    <h3 id="modal-title">Qual o nome deste país?</h3>
+    <input type="text" id="guess-input" placeholder="Digite o nome do país aqui...">
+    <button id="guess-button">Adivinhar</button>
+    <p id="modal-message"></p>
+  </div>
+
+  <p id="score">Pontuação: 0</p>
+  <p id="message"></p>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
