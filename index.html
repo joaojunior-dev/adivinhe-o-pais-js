@@ -71,10 +71,14 @@
     <h3 id="find-feedback-title">Resultado</h3>
     <p id="find-feedback-message"></p>
     <div id="find-feedback-correct-info" style="display: none;">
-      <p>O país correto era: <span id="find-feedback-correct-name"></span></p>
+      <p>Confira a bandeira: <span id="find-feedback-correct-name"></span></p>
       <img id="find-feedback-correct-flag" src="" alt="Bandeira correta" />
     </div>
-    <button id="find-next-country-button">Próximo País</button>
+    <div class="modal-button-group">
+      <button id="find-try-again-button" style="display: none;">Tentar Novamente</button>
+      <button id="find-give-up-button" style="display: none;">Desistir e Ver Resposta</button>
+      <button id="find-next-country-button" style="display: none;">Próximo País</button>
+    </div>
   </div>
 
   <div id="game-mode-info-modal" class="modal-base" style="display: none;">

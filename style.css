@@ -19,12 +19,11 @@ body {
   height: 100%;
   color: #ecf0f1;
   display: flex;
-  /* flex-direction: column; -- Removido, padrão 'row' é adequado para centralizar um único filho */
-  justify-content: center; /* Centraliza .start-screen-content horizontalmente */
-  align-items: center; /* Centraliza .start-screen-content verticalmente */
-  /* padding: 20px; -- REMOVIDO daqui */
-  text-align: center; /* Para o conteúdo de texto dentro de .start-screen-content */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   z-index: 3000;
+  /* padding: 20px; -- Removido para centralização rigorosa */
   overflow: hidden;
 }
 
@@ -52,21 +51,18 @@ body {
 }
 
 .start-screen-content {
-  max-width: 650px; /* Largura máxima do conteúdo */
-  width: 90%; /* Em telas menores, ocupa 90% da largura da tela */
+  max-width: 650px;
+  width: 90%;
   position: relative;
   z-index: 3;
-  padding: 30px; /* ADICIONADO padding interno aqui (aumentei um pouco para compensar) */
-  box-sizing: border-box; /* Garante que o padding não aumente a largura total além de max-width/width */
-  /* text-align: center; -- Já herdado de #start-screen, mas pode ser explícito se preferir */
-  /* Assegure que não há margens externas aqui que possam causar desalinhamento */
-  margin: 0; /* Garante que não há margens externas empurrando o elemento */
+  padding: 30px;
+  box-sizing: border-box;
+  margin: 0;
 }
 
-/* Os estilos de .game-title-large, .game-instructions, #mode-selection, .mode-button permanecem como definidos anteriormente */
 .game-title-large {
   font-size: 3.8em;
-  margin-bottom: 25px; /* Margem interna para espaçamento vertical */
+  margin-bottom: 25px;
   font-weight: 600;
   color: #ffffff;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
@@ -74,7 +70,7 @@ body {
 
 .game-instructions {
   font-size: 1.3em;
-  margin-bottom: 40px; /* Margem interna para espaçamento vertical */
+  margin-bottom: 40px;
   line-height: 1.7;
   color: #dfe6e9;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
@@ -82,9 +78,9 @@ body {
 
 #mode-selection {
   display: flex;
-  justify-content: center; /* Centraliza os botões dentro desta div */
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap; /* Permite que botões quebrem linha em telas muito pequenas se necessário */
+  flex-wrap: wrap;
   gap: 25px;
 }
 
@@ -101,7 +97,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   letter-spacing: 0.5px;
-  margin: 5px; /* Adiciona pequena margem caso os botões quebrem linha */
+  margin: 5px;
 }
 
 .mode-button:hover {
@@ -146,7 +142,6 @@ body {
 }
 
 .top-bar-left h1 {
-  /* Título dentro da barra do jogo */
   color: #2c3e50;
   margin: 0 20px 0 0;
   font-size: 1.8em;
@@ -300,6 +295,7 @@ body {
 }
 
 #find-country-feedback-modal h3 {
+  /* Título H3 dentro do modal de feedback */
   margin-top: 0;
   margin-bottom: 15px;
   font-size: 1.6em;
@@ -307,12 +303,13 @@ body {
 }
 
 #find-country-feedback-modal p {
-  font-size: 1.2em;
-  margin-bottom: 15px;
+  /* Parágrafo de mensagem dentro do modal de feedback */
+  font-size: 1.1em;
+  margin-bottom: 10px;
 }
 
 #find-feedback-correct-info {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 #find-feedback-correct-info p {
@@ -328,24 +325,52 @@ body {
   margin-top: 5px;
 }
 
+.modal-button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+#find-try-again-button,
+#find-give-up-button,
 #find-next-country-button {
+  /* Estilo comum para botões do modal de feedback */
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding: 12px 25px;
-  background-color: #5dade2;
+  padding: 12px 20px;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 1.1em;
+  font-size: 1em;
   transition: background-color 0.3s ease, transform 0.1s ease;
-  margin-top: 10px;
 }
 
+#find-try-again-button {
+  background-color: #5dade2;
+}
+#find-try-again-button:hover {
+  background-color: #3498db;
+}
+
+#find-give-up-button {
+  background-color: #e74c3c;
+}
+#find-give-up-button:hover {
+  background-color: #c0392b;
+}
+
+#find-next-country-button {
+  /* Estilo original, pode ser agrupado se for idêntico */
+  background-color: #5dade2; /* Mantendo consistência com o try-again */
+}
 #find-next-country-button:hover {
   background-color: #3498db;
 }
 
 #modal-title {
+  /* Título do modal de adivinhar nome */
   margin-top: 0;
   margin-bottom: 25px;
   color: #ecf0f1;
@@ -398,7 +423,7 @@ body {
 }
 
 #modal-message {
-  /* Mensagem dentro do modal de adivinhar */
+  /* Mensagem dentro do modal de adivinhar nome */
   margin-top: 20px;
   min-height: 24px;
   font-weight: 500;
@@ -460,7 +485,6 @@ body.map-theme-light #map {
 
 /* --- AJUSTES DE RESPONSIVIDADE --- */
 @media (max-width: 992px) {
-  /* Responsividade para a barra superior do jogo */
   #game-top-bar {
     flex-direction: column;
     align-items: center;
@@ -492,7 +516,6 @@ body.map-theme-light #map {
     margin: 5px 5px;
   }
 
-  /* Responsividade para a tela inicial */
   #start-screen .game-title-large {
     font-size: 2.8em;
   }
@@ -508,7 +531,6 @@ body.map-theme-light #map {
     padding: 15px 30px;
   }
 
-  /* Ajustes gerais para mobile */
   #map {
     height: 400px;
     margin-bottom: 15px;
@@ -565,19 +587,23 @@ body.map-theme-light #map {
     padding: 12px;
     margin-bottom: 15px;
   }
-  #guess-button,
-  #find-next-country-button {
+  #guess-button {
     padding: 12px 20px;
     font-size: 1em;
+  } /* Ajustado o botão de adivinhar nome */
+
+  .modal-button-group button {
+    /* Botões no modal de feedback */
+    font-size: 0.9em;
+    padding: 10px 15px;
   }
-  #modal-message,
   #find-country-feedback-modal p {
+    /* Mensagem no modal de feedback */
     font-size: 1em;
   }
 }
 
 @media (max-width: 480px) {
-  /* Responsividade para a tela inicial */
   #start-screen .game-title-large {
     font-size: 2.2em;
   }
@@ -591,10 +617,9 @@ body.map-theme-light #map {
     box-sizing: border-box;
   }
 
-  /* Responsividade para a barra superior do jogo */
   .top-bar-left h1 {
     font-size: 1.5em;
-  } /* Ajustado para não ser igual ao game-title-large */
+  }
   #score,
   #high-score-display {
     font-size: 0.9em;
@@ -613,7 +638,6 @@ body.map-theme-light #map {
     max-width: calc(100% - 10px);
   }
 
-  /* Ajustes gerais para mobile */
   #map {
     height: 300px;
   }
