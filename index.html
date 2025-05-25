@@ -5,25 +5,79 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adivinhe o País</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <h1>Adivinhe o País</h1>
-  <div id="map"></div>
+
+  <div id="start-screen">
+    <div class="start-screen-content">
+      <h2 class="game-title-large">Adivinhe o País!</h2>
+      <p class="game-instructions">Escolha um modo de jogo para começar.</p>
+      <div id="mode-selection">
+        <button id="start-guess-name-button" class="mode-button">Adivinhe o Nome</button>
+        <button id="start-find-country-button" class="mode-button">Localize o País</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="game-container" style="display: none;">
+    <header id="game-top-bar">
+      <div class="top-bar-section top-bar-left">
+        <h1>Adivinhe o País</h1>
+        <button id="theme-toggle-button">Alternar Tema do Mapa</button>
+      </div>
+      <div class="top-bar-section top-bar-center">
+        <div id="score-info">
+          <p id="score">Pontuação: 0</p>
+          <p id="high-score-display">Recorde: 0</p>
+        </div>
+        <p id="message"></p>
+      </div>
+      <div class="top-bar-section top-bar-right">
+        <button id="restart-button">Reiniciar Jogo</button>
+        <button id="back-to-menu-button">Voltar ao Menu</button>
+      </div>
+    </header>
+    <div id="find-country-prompt" style="display: none;">
+      <h3 id="find-country-name"></h3>
+      <img id="find-country-flag" src="" alt="Bandeira do país" />
+      <p>Clique no país correto no mapa!</p>
+    </div>
+
+    <div id="map"></div>
+
+  </div>
 
   <div id="overlay"></div>
 
-  <div id="game-controls">
+  <div id="game-controls" class="modal-base">
     <h3 id="modal-title">Qual o nome deste país?</h3>
     <input type="text" id="guess-input" placeholder="Digite o nome do país aqui...">
     <button id="guess-button">Adivinhar</button>
     <p id="modal-message"></p>
   </div>
 
-  <p id="score">Pontuação: 0</p>
-  <p id="message"></p>
+  <div id="find-country-feedback-modal" class="modal-base">
+    <h3 id="find-feedback-title">Resultado</h3>
+    <p id="find-feedback-message"></p>
+    <div id="find-feedback-correct-info" style="display: none;">
+      <p>O país correto era: <span id="find-feedback-correct-name"></span></p>
+      <img id="find-feedback-correct-flag" src="" alt="Bandeira correta" />
+    </div>
+    <button id="find-next-country-button">Próximo País</button>
+  </div>
+
+  <div id="game-mode-info-modal" class="modal-base" style="display: none;">
+    <h3 id="game-mode-info-title">Modo de Jogo</h3>
+    <p id="game-mode-info-message"></p>
+    <button id="game-mode-info-ok-button">Entendido!</button>
+  </div>
+  <div id="loading-indicator" style="display: none;">Carregando dados...</div>
+
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
