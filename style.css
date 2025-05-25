@@ -1,4 +1,4 @@
-/* ... (todos os estilos existentes até #loading-indicator) ... */
+/* styles.css */
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
@@ -10,91 +10,133 @@ body {
   overflow-x: hidden;
 }
 
+/* --- ESTILOS DA TELA INICIAL MODERNIZADA --- */
 #start-screen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #2c3e50;
   color: #ecf0f1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  /* flex-direction: column; -- Removido, padrão 'row' é adequado para centralizar um único filho */
+  justify-content: center; /* Centraliza .start-screen-content horizontalmente */
+  align-items: center; /* Centraliza .start-screen-content verticalmente */
+  /* padding: 20px; -- REMOVIDO daqui */
+  text-align: center; /* Para o conteúdo de texto dentro de .start-screen-content */
   z-index: 3000;
-  padding: 20px;
+  overflow: hidden;
+}
+
+#start-video-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 1;
+  object-fit: cover;
+}
+
+#start-screen-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30, 40, 50, 0.65);
+  z-index: 2;
 }
 
 .start-screen-content {
-  max-width: 600px;
+  max-width: 650px; /* Largura máxima do conteúdo */
+  width: 90%; /* Em telas menores, ocupa 90% da largura da tela */
+  position: relative;
+  z-index: 3;
+  padding: 30px; /* ADICIONADO padding interno aqui (aumentei um pouco para compensar) */
+  box-sizing: border-box; /* Garante que o padding não aumente a largura total além de max-width/width */
+  /* text-align: center; -- Já herdado de #start-screen, mas pode ser explícito se preferir */
+  /* Assegure que não há margens externas aqui que possam causar desalinhamento */
+  margin: 0; /* Garante que não há margens externas empurrando o elemento */
 }
 
+/* Os estilos de .game-title-large, .game-instructions, #mode-selection, .mode-button permanecem como definidos anteriormente */
 .game-title-large {
-  font-size: 3em;
-  margin-bottom: 20px;
-  font-weight: 300;
+  font-size: 3.8em;
+  margin-bottom: 25px; /* Margem interna para espaçamento vertical */
+  font-weight: 600;
   color: #ffffff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .game-instructions {
-  font-size: 1.2em;
-  margin-bottom: 30px;
-  line-height: 1.6;
-  color: #bdc3c7;
+  font-size: 1.3em;
+  margin-bottom: 40px; /* Margem interna para espaçamento vertical */
+  line-height: 1.7;
+  color: #dfe6e9;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 #mode-selection {
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  justify-content: center; /* Centraliza os botões dentro desta div */
+  align-items: center;
+  flex-wrap: wrap; /* Permite que botões quebrem linha em telas muito pequenas se necessário */
+  gap: 25px;
 }
 
 .mode-button {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding: 15px 30px;
-  background-color: #5dade2;
+  padding: 16px 38px;
+  background-color: rgba(255, 255, 255, 0.1);
   color: white;
-  border: none;
-  border-radius: 8px;
+  border: 2px solid white;
+  border-radius: 50px;
   cursor: pointer;
-  font-size: 1.1em;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-size: 1.15em;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
+  margin: 5px; /* Adiciona pequena margem caso os botões quebrem linha */
 }
 
 .mode-button:hover {
-  background-color: #3498db;
+  background-color: white;
+  color: #2c3e50;
+  transform: translateY(-3px);
 }
 
 .mode-button:active {
-  transform: scale(0.98);
+  transform: scale(0.97) translateY(-1px);
 }
+/* --- FIM DOS ESTILOS DA TELA INICIAL MODERNIZADA --- */
 
 #game-container {
   padding: 20px;
 }
 
-/* ESTILOS PARA A NOVA BARRA SUPERIOR */
+/* ESTILOS PARA A BARRA SUPERIOR DO JOGO */
 #game-top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Para telas menores, os itens podem quebrar linha */
+  flex-wrap: wrap;
   padding: 12px 20px;
-  background-color: #ffffff; /* Fundo branco para destaque */
-  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1); /* Sombra sutil e moderna */
-  border-radius: 8px; /* Cantos arredondados */
-  margin-bottom: 20px; /* Espaçamento antes do mapa/prompt */
-  border: 1px solid #dee2e6; /* Borda leve */
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #dee2e6;
 }
 
 .top-bar-section {
-  /* Classe genérica para seções da barra, se necessário no futuro */
   display: flex;
   align-items: center;
-  flex-wrap: wrap; /* Permite que itens internos quebrem linha */
+  flex-wrap: wrap;
 }
 
 .top-bar-left {
@@ -104,9 +146,10 @@ body {
 }
 
 .top-bar-left h1 {
-  color: #2c3e50; /* Cor do título original */
-  margin: 0 20px 0 0; /* Remove margem inferior, adiciona direita */
-  font-size: 1.8em; /* Ajuste de tamanho se necessário */
+  /* Título dentro da barra do jogo */
+  color: #2c3e50;
+  margin: 0 20px 0 0;
+  font-size: 1.8em;
 }
 
 #theme-toggle-button {
@@ -118,7 +161,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.9em;
-  margin: 0; /* Remove margem inferior original */
+  margin: 0;
   transition: background-color 0.3s ease, transform 0.1s ease;
 }
 #theme-toggle-button:hover {
@@ -130,33 +173,32 @@ body {
 
 .top-bar-center {
   display: flex;
-  flex-direction: column; /* Pontuação e mensagem uma abaixo da outra */
-  align-items: center; /* Centraliza no eixo cruzado */
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  flex-grow: 1; /* Permite que esta seção ocupe espaço disponível */
-  margin: 0 15px; /* Espaçamento das laterais */
+  flex-grow: 1;
+  margin: 0 15px;
 }
 
 #score-info {
-  /* Antiga #score-area */
-  display: flex; /* Coloca pontuação e recorde lado a lado */
-  margin-bottom: 4px; /* Pequeno espaço para a mensagem abaixo */
+  display: flex;
+  margin-bottom: 4px;
 }
 
 #score,
 #high-score-display {
   font-size: 1.1em;
   color: #34495e;
-  margin: 0 10px; /* Remove margem superior/inferior, ajusta laterais */
+  margin: 0 10px;
   font-weight: 500;
 }
 
 #message {
   color: #333;
-  font-weight: 500; /* Um pouco mais de destaque */
+  font-weight: 500;
   font-size: 1em;
-  min-height: 1.5em; /* Garante um espaço mesmo vazia */
-  margin: 0; /* Remove margens originais */
+  min-height: 1.5em;
+  margin: 0;
   font-style: italic;
 }
 
@@ -169,14 +211,14 @@ body {
 #restart-button,
 #back-to-menu-button {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding: 9px 18px; /* Ajuste no padding */
+  padding: 9px 18px;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 0.95em; /* Ajuste no tamanho da fonte */
+  font-size: 0.95em;
   transition: background-color 0.3s ease, transform 0.1s ease;
-  margin: 0 0 0 10px; /* Remove margem superior, adiciona à esquerda para espaçamento */
+  margin: 0 0 0 10px;
 }
 
 #restart-button {
@@ -196,20 +238,11 @@ body {
 #back-to-menu-button:hover {
   background-color: #7f8c8d;
 }
-/* FIM DOS ESTILOS DA NOVA BARRA SUPERIOR */
-
-/* Removendo estilos antigos de posicionamento para elementos movidos, se necessário */
-/* h1 { margin-bottom: 10px; } -> Controlado em .top-bar-left h1 */
-/* #theme-toggle-button { margin-bottom: 20px; } -> Controlado em #theme-toggle-button */
-/* #score-area { margin-bottom: 10px; } -> Não existe mais, #score-info controla */
-/* #score, #high-score-display { margin-top: 5px; margin-bottom: 5px; display: inline-block; margin-right: 15px; } -> Controlado em #score, #high-score-display */
-/* #message { margin-top: 0; font-weight: normal; margin-bottom: 15px; } -> Controlado em #message */
-/* #restart-button { margin-top: 0; } -> Controlado em #restart-button */
-/* #back-to-menu-button { margin-top: 10px; margin-left: 10px; } -> Controlado em #back-to-menu-button */
+/* --- FIM DOS ESTILOS DA BARRA SUPERIOR DO JOGO --- */
 
 #map {
   width: 100%;
-  height: 600px; /* Altura padrão para desktop */
+  height: 600px;
   border: 1px solid #ccc;
   margin: 0 auto 20px auto;
   border-radius: 8px;
@@ -264,10 +297,6 @@ body {
 
 #game-controls {
   /* Modal de adivinhar nome */
-}
-
-#find-country-feedback-modal {
-  /* Herda de .modal-base */
 }
 
 #find-country-feedback-modal h3 {
@@ -369,13 +398,12 @@ body {
 }
 
 #modal-message {
+  /* Mensagem dentro do modal de adivinhar */
   margin-top: 20px;
   min-height: 24px;
   font-weight: 500;
   font-size: 1.1em;
 }
-
-/* #score-area original styles removed/modified as its elements are now in #game-top-bar */
 
 #find-country-prompt {
   background-color: #fff;
@@ -426,63 +454,61 @@ body {
 }
 
 body.map-theme-dark #map {
-  /* Estilos específicos para o mapa no tema escuro, se necessário */
 }
 body.map-theme-light #map {
-  /* Estilos específicos para o mapa no tema claro, se necessário */
 }
 
-/* AJUSTES DE RESPONSIVIDADE PARA MOBILE */
+/* --- AJUSTES DE RESPONSIVIDADE --- */
 @media (max-width: 992px) {
-  /* Aumentado o breakpoint para melhor ajuste da barra superior */
+  /* Responsividade para a barra superior do jogo */
   #game-top-bar {
     flex-direction: column;
-    align-items: center; /* Centraliza as seções empilhadas */
+    align-items: center;
   }
   .top-bar-left,
   .top-bar-center,
   .top-bar-right {
-    width: 100%; /* Seções ocupam largura total */
-    justify-content: center; /* Centraliza conteúdo dentro das seções */
+    width: 100%;
+    justify-content: center;
     margin-top: 8px;
     margin-bottom: 8px;
   }
   .top-bar-left h1 {
-    margin-bottom: 10px; /* Espaço para o botão de tema abaixo */
+    margin-bottom: 10px;
     text-align: center;
     width: 100%;
   }
   .top-bar-left {
-    flex-direction: column; /* Título acima do botão de tema */
+    flex-direction: column;
   }
   .top-bar-center {
-    margin: 10px 0; /* Espaçamento vertical */
+    margin: 10px 0;
   }
   .top-bar-right {
     margin-top: 5px;
   }
   .top-bar-right button {
-    /* Para que os botões não fiquem muito grandes */
-    flex-grow: 1; /* Permite que os botões cresçam */
+    flex-grow: 1;
     margin: 5px 5px;
   }
 
-  /* Ajustes gerais para mobile */
-  .game-title-large {
-    font-size: 2.2em;
+  /* Responsividade para a tela inicial */
+  #start-screen .game-title-large {
+    font-size: 2.8em;
   }
-  .game-instructions {
-    font-size: 1em;
-    margin-bottom: 25px;
+  #start-screen .game-instructions {
+    font-size: 1.1em;
   }
-  #mode-selection {
+  #start-screen #mode-selection {
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
   }
-  .mode-button {
-    font-size: 1em;
-    padding: 12px 25px;
+  #start-screen .mode-button {
+    font-size: 1.1em;
+    padding: 15px 30px;
   }
+
+  /* Ajustes gerais para mobile */
   #map {
     height: 400px;
     margin-bottom: 15px;
@@ -493,7 +519,7 @@ body.map-theme-light #map {
 
   #score-info {
     justify-content: center;
-  } /* Centraliza pontuação e recorde */
+  }
   #score,
   #high-score-display {
     font-size: 1em;
@@ -505,7 +531,7 @@ body.map-theme-light #map {
   #restart-button,
   #back-to-menu-button,
   #theme-toggle-button {
-    padding: 10px 15px; /* Aumentar um pouco o padding para toque */
+    padding: 10px 15px;
     font-size: 0.9em;
   }
 
@@ -551,19 +577,24 @@ body.map-theme-light #map {
 }
 
 @media (max-width: 480px) {
-  .game-title-large {
-    font-size: 1.8em;
+  /* Responsividade para a tela inicial */
+  #start-screen .game-title-large {
+    font-size: 2.2em;
   }
-  .game-instructions {
-    font-size: 0.9em;
+  #start-screen .game-instructions {
+    font-size: 1em;
   }
-  #map {
-    height: 300px;
+  #start-screen .mode-button {
+    font-size: 1em;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
   }
 
+  /* Responsividade para a barra superior do jogo */
   .top-bar-left h1 {
     font-size: 1.5em;
-  }
+  } /* Ajustado para não ser igual ao game-title-large */
   #score,
   #high-score-display {
     font-size: 0.9em;
@@ -573,14 +604,17 @@ body.map-theme-light #map {
   }
 
   .top-bar-right button {
-    width: calc(
-      50% - 10px
-    ); /* Faz os botões ocuparem metade da largura disponível */
+    width: calc(50% - 10px);
     margin: 5px;
-    min-height: 40px; /* Altura mínima para toque */
+    min-height: 40px;
   }
   #theme-toggle-button {
-    width: auto; /* Permite que o botão de tema se ajuste ao conteúdo */
+    width: auto;
     max-width: calc(100% - 10px);
+  }
+
+  /* Ajustes gerais para mobile */
+  #map {
+    height: 300px;
   }
 }

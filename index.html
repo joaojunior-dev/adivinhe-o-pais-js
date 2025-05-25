@@ -14,6 +14,12 @@
 <body>
 
   <div id="start-screen">
+    <video autoplay loop muted playsinline id="start-video-bg">
+      <source src="videos/video_intro.mp4" type="video/mp4">
+      Seu navegador não suporta a tag de vídeo.
+    </video>
+    <div id="start-screen-overlay"></div>
+
     <div class="start-screen-content">
       <h2 class="game-title-large">Adivinhe o País!</h2>
       <p class="game-instructions">Escolha um modo de jogo para começar.</p>
@@ -42,6 +48,7 @@
         <button id="back-to-menu-button">Voltar ao Menu</button>
       </div>
     </header>
+
     <div id="find-country-prompt" style="display: none;">
       <h3 id="find-country-name"></h3>
       <img id="find-country-flag" src="" alt="Bandeira do país" />
@@ -49,7 +56,6 @@
     </div>
 
     <div id="map"></div>
-
   </div>
 
   <div id="overlay"></div>
